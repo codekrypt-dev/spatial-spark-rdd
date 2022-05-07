@@ -31,27 +31,22 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.index.SpatialIndex;
 
 public class RangeQuery implements Serializable {
 
-  public static <U extends Geometry, T extends Geometry> JavaRDD<T> spatialRangeQuery(
+  public static <U extends Geometry, T extends Geometry> JavaRDD spatialRangeQuery(
       SpatialRDD<T> spatialRDD,
       U originalQueryGeometry,
       boolean considerBoundaryIntersection,
-      boolean useIndex)
-      throws Exception {
+      boolean useIndex) {
 
     if (useIndex) {
-      JavaRDD<SpatialIndex> spatialIndexedRDD =
-          spatialRDD.indexedRawRDD == null ? spatialRDD.indexedSpatialPartitionedRDD : spatialRDD.indexedRawRDD;
 
-      if (spatialIndexedRDD == null) {
-        throw new Exception(
-            "[RangeQuery][SpatialRangeQuery] Index doesn't exist. Please build index on rawSpatialRDD or spatialPartitionedRDD.");
-      }
-      return spatialIndexedRDD.mapPartitions(
-          new RangeFilterUsingIndex(originalQueryGeometry, considerBoundaryIntersection, true));
+      return spatialRDD
+          .getIndexedSpatialRdd()
+          .mapPartitions(
+              new RangeFilterUsingIndex<>(
+                  originalQueryGeometry, considerBoundaryIntersection, true));
     } else {
       return spatialRDD
           .getRawRdd()

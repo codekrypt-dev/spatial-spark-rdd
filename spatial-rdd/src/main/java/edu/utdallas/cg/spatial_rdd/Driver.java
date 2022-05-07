@@ -37,7 +37,7 @@ public class Driver {
     System.out.println("Query without indexing : " + resultSize);
 
     // 3.b Query: with indexing
-    spatialRDD.buildIndex(IndexType.KDTREE, true);
+    spatialRDD.buildIndex(IndexType.KDTREE);
     resultSize = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false, true).count();
     System.out.println("Query with indexing : " + resultSize);
   }

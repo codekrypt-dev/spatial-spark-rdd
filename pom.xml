@@ -25,6 +25,10 @@
 
         <jts.version>1.18.2</jts.version>
         <jts2geojson.version>0.16.1</jts2geojson.version>
+
+        <openjdk.jmh.version>1.19</openjdk.jmh.version>
+        <junit.version>4.13.2</junit.version>
+        <spark-testing-base_2.12.version>${spark.version}_1.1.1</spark-testing-base_2.12.version>
     </properties>
 
     <modules>

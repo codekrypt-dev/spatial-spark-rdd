@@ -55,6 +55,37 @@
             <version>${jts2geojson.version}</version>
         </dependency>
 
+        <!-- JMH: Benchmarking dependencies -->
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${openjdk.jmh.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${openjdk.jmh.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spark Test Suite-->
+        <dependency>
+            <groupId>com.holdenkarau</groupId>
+            <artifactId>spark-testing-base_2.12</artifactId>
+            <version>${spark-testing-base_2.12.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 
