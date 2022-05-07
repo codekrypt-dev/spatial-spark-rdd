@@ -41,7 +41,7 @@ public class RawRddBenchmark extends BaseBenchmark {
   }
 
   @Benchmark
-  public void queryWithOutIndexing(Blackhole bh) {
+  public void query_on_hash_hash(Blackhole bh) {
     for (Envelope queryEnvelope : queryList) {
       long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false, false).count();
       bh.consume(result);

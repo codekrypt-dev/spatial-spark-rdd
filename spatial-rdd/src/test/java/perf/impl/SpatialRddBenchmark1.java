@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @State(Scope.Thread)
-public class SpatialRddBenchmark extends BaseBenchmark {
+public class SpatialRddBenchmark1 extends BaseBenchmark {
 
   // We will test with the below list sizes.
   @Param({"1", "10", "100", "1000"})
@@ -41,7 +41,7 @@ public class SpatialRddBenchmark extends BaseBenchmark {
   }
 
   @Benchmark
-  public void queryWithIndexing(Blackhole bh) {
+  public void query_on_kdTree_kdTree(Blackhole bh) {
     for (Envelope queryEnvelope : queryList) {
       long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false, true).count();
       bh.consume(result);
