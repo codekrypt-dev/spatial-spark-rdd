@@ -1,4 +1,4 @@
-package perf.impl;
+package perf;
 
 import edu.utdallas.cg.spatial_rdd.Driver;
 import edu.utdallas.cg.spatial_rdd.core.query.range.RangeQuery;
@@ -9,15 +9,13 @@ import edu.utdallas.cg.spatial_rdd.file.io.impl.GeoJsonRddReader;
 import org.locationtech.jts.geom.Envelope;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import perf.BaseBenchmark;
 import perf.utils.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @State(Scope.Thread)
-public class RawRddBenchmark extends BaseBenchmark {
+public class RddBenchmarks extends BaseBenchmark {
 
   // We will test with the below list sizes.
   @Param({"1", "10", "100", "1000"})
@@ -44,7 +42,15 @@ public class RawRddBenchmark extends BaseBenchmark {
   @Benchmark
   public void query_on_hash_hash(Blackhole bh) {
     for (Envelope queryEnvelope : queryList) {
-      long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false, false).count();
+      long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false).count();
+      bh.consume(result);
+    }
+  }
+
+  @Benchmark
+  public void query_on_kdTree_kdTree(Blackhole bh) {
+    for (Envelope queryEnvelope : queryList) {
+      long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, true).count();
       bh.consume(result);
     }
   }

@@ -1,5 +1,5 @@
 "Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: queryListSize"
-"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,130.601461,112.387558,"ms/op",1
-"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,351.619958,126.020696,"ms/op",10
-"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,2081.791083,238.096123,"ms/op",100
-"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,15247.162525,333.468069,"ms/op",1000
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,80.598996,153.695306,"ms/op",1
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,286.547137,37.817634,"ms/op",10
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,1963.496142,41.351034,"ms/op",100
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,15070.728625,282.254253,"ms/op",1000
