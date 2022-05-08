@@ -1,5 +1,5 @@
 "Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: queryListSize"
-"perf.impl.RawRddBenchmark.queryWithOutIndexing","avgt",1,5,109.851059,23.132089,"ms/op",1
-"perf.impl.RawRddBenchmark.queryWithOutIndexing","avgt",1,5,1096.772713,802.427638,"ms/op",10
-"perf.impl.RawRddBenchmark.queryWithOutIndexing","avgt",1,5,2858.284350,3414.943054,"ms/op",100
-"perf.impl.RawRddBenchmark.queryWithOutIndexing","avgt",1,5,14472.752233,1508.355511,"ms/op",1000
+"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,130.601461,112.387558,"ms/op",1
+"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,351.619958,126.020696,"ms/op",10
+"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,2081.791083,238.096123,"ms/op",100
+"perf.impl.SpatialRddBenchmark1.query_on_kdTree_kdTree","avgt",1,5,15247.162525,333.468069,"ms/op",1000
