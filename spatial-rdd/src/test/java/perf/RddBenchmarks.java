@@ -22,19 +22,27 @@ public class RddBenchmarks extends BaseBenchmark {
   public int queryListSize;
 
   public List<Envelope> queryList;
-  public SpatialRDD spatialRDD;
+  public SpatialRDD spatialRDD1;
+  public SpatialRDD spatialRDD2;
 
   @Setup
   public void setUp() {
 
     // 1. Load
     String inputPath = Driver.class.getClassLoader().getResource("geojson_points.json").getPath();
-    spatialRDD = GeoJsonRddReader.readToGeometryRDD(jsc(), inputPath);
+    spatialRDD1 = GeoJsonRddReader.readToGeometryRDD(jsc(), inputPath);
+    spatialRDD2 = GeoJsonRddReader.readToGeometryRDD(jsc(), inputPath);
 
-    // 2. PreProcess
-    spatialRDD.analyze();
-    spatialRDD.spatialPartitioning(GridType.KD_TREE);
-    spatialRDD.buildIndex(IndexType.KDTREE);
+    // 2.a PreProcess (KD Tre)
+    spatialRDD1.analyze();
+    spatialRDD1.spatialPartitioning(GridType.KD_TREE);
+    spatialRDD1.buildIndex(IndexType.KDTREE);
+
+
+    // 2.b PreProcess (KD Tre)
+    spatialRDD2.analyze();
+    spatialRDD2.spatialPartitioning(GridType.KDB_TREE);
+    spatialRDD2.buildIndex(IndexType.RTREE);
 
     queryList = createQueryTestData();
   }
@@ -42,7 +50,7 @@ public class RddBenchmarks extends BaseBenchmark {
   @Benchmark
   public void query_on_hash_hash(Blackhole bh) {
     for (Envelope queryEnvelope : queryList) {
-      long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false).count();
+      long result = RangeQuery.spatialRangeQuery(spatialRDD1, queryEnvelope, false).count();
       bh.consume(result);
     }
   }
@@ -50,7 +58,15 @@ public class RddBenchmarks extends BaseBenchmark {
   @Benchmark
   public void query_on_kdTree_kdTree(Blackhole bh) {
     for (Envelope queryEnvelope : queryList) {
-      long result = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, true).count();
+      long result = RangeQuery.spatialRangeQuery(spatialRDD1, queryEnvelope, true).count();
+      bh.consume(result);
+    }
+  }
+
+  @Benchmark
+  public void query_on_kdbTree_rTree(Blackhole bh) {
+    for (Envelope queryEnvelope : queryList) {
+      long result = RangeQuery.spatialRangeQuery(spatialRDD2, queryEnvelope, true).count();
       bh.consume(result);
     }
   }
