@@ -10,10 +10,10 @@ import org.locationtech.jts.geom.Envelope;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 import perf.BaseBenchmark;
+import perf.utils.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @State(Scope.Thread)
 public class SpatialRddBenchmark1 extends BaseBenchmark {
@@ -51,11 +51,13 @@ public class SpatialRddBenchmark1 extends BaseBenchmark {
   private List<Envelope> createQueryTestData() {
     List<Envelope> result = new ArrayList<>();
 
-    Random rand = new Random();
+    int x1 = RandomUtils.valueBetween(-300, 90);
+    int x2 = RandomUtils.valueBetween(-300, 90);
+    int y1 = RandomUtils.valueBetween(-300, 90);
+    int y2 = RandomUtils.valueBetween(-300, 90);
 
-    for (int i = 0; i < queryListSize; i++) {
-      result.add(new Envelope(-80.01, -75.01, 40, 40.4));
-    }
+    for (int i = 0; i < queryListSize; i++) result.add(new Envelope(x1, x2, y1, y2));
+
     return result;
   }
 }
