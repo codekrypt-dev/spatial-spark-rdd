@@ -1,5 +1,0 @@
-"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: queryListSize"
-"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,80.598996,153.695306,"ms/op",1
-"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,286.547137,37.817634,"ms/op",10
-"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,1963.496142,41.351034,"ms/op",100
-"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,15070.728625,282.254253,"ms/op",1000
