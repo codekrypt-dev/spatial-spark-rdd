@@ -31,27 +31,22 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.index.SpatialIndex;
 
 public class RangeQuery implements Serializable {
 
-  public static <U extends Geometry, T extends Geometry> JavaRDD<T> spatialRangeQuery(
+  public static <U extends Geometry, T extends Geometry> JavaRDD spatialRangeQuery(
       SpatialRDD<T> spatialRDD,
       U originalQueryGeometry,
       boolean considerBoundaryIntersection,
-      boolean useIndex)
-      throws Exception {
+      boolean useIndex) {
 
     if (useIndex) {
-      JavaRDD<SpatialIndex> spatialIndexedRDD =
-          spatialRDD.indexedRawRDD == null ? spatialRDD.indexedSpatialPartitionedRDD : spatialRDD.indexedRawRDD;
 
-      if (spatialIndexedRDD == null) {
-        throw new Exception(
-            "[RangeQuery][SpatialRangeQuery] Index doesn't exist. Please build index on rawSpatialRDD or spatialPartitionedRDD.");
-      }
-      return spatialIndexedRDD.mapPartitions(
-          new RangeFilterUsingIndex(originalQueryGeometry, considerBoundaryIntersection, true));
+      return spatialRDD
+          .getIndexedSpatialRdd()
+          .mapPartitions(
+              new RangeFilterUsingIndex<>(
+                  originalQueryGeometry, considerBoundaryIntersection, true));
     } else {
       return spatialRDD
           .getRawRdd()
@@ -65,7 +60,6 @@ public class RangeQuery implements Serializable {
    *
    * @param spatialRDD the spatial RDD
    * @param queryWindow the original query window
-   * @param considerBoundaryIntersection the consider boundary intersection
    * @param useIndex the use index
    * @return the java RDD
    * @throws Exception the exception
@@ -74,7 +68,6 @@ public class RangeQuery implements Serializable {
   public static <U extends Geometry, T extends Geometry> JavaRDD<T> spatialRangeQuery(
       SpatialRDD<T> spatialRDD,
       Envelope queryWindow,
-      boolean considerBoundaryIntersection,
       boolean useIndex) {
     Coordinate[] coordinates = new Coordinate[5];
     coordinates[0] = new Coordinate(queryWindow.getMinX(), queryWindow.getMinY());
@@ -84,6 +77,6 @@ public class RangeQuery implements Serializable {
     coordinates[4] = coordinates[0];
     GeometryFactory geometryFactory = new GeometryFactory();
     U queryGeometry = (U) geometryFactory.createPolygon(coordinates);
-    return spatialRangeQuery(spatialRDD, queryGeometry, considerBoundaryIntersection, useIndex);
+    return spatialRangeQuery(spatialRDD, queryGeometry, false, useIndex);
   }
 }

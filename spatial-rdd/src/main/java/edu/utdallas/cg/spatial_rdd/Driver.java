@@ -33,12 +33,12 @@ public class Driver {
     Envelope queryEnvelope = new Envelope(-80.01, -75.01, 40, 40.4);
 
     // 3.a Query: without Indexing
-    long resultSize = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false, false).count();
+    long resultSize = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false).count();
     System.out.println("Query without indexing : " + resultSize);
 
     // 3.b Query: with indexing
-    spatialRDD.buildIndex(IndexType.KDTREE, true);
-    resultSize = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, false, true).count();
+    spatialRDD.buildIndex(IndexType.KDTREE);
+    resultSize = RangeQuery.spatialRangeQuery(spatialRDD, queryEnvelope, true).count();
     System.out.println("Query with indexing : " + resultSize);
   }
 }

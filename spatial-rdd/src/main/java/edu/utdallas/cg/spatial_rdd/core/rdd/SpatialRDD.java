@@ -33,9 +33,7 @@ public class SpatialRDD<T extends Geometry> implements Serializable {
 
   public JavaRDD<T> rawRdd;
   public JavaRDD<T> spatialPartitionedRDD;
-  public JavaRDD<SpatialIndex> indexedRawRDD;
   public JavaRDD<SpatialIndex> indexedSpatialPartitionedRDD;
-
   public List<String> fieldNames;
 
   private SpatialPartitioner partitioner;
@@ -173,23 +171,22 @@ public class SpatialRDD<T extends Geometry> implements Serializable {
     return true;
   }
 
-  public void buildIndex(final IndexType indexType, boolean buildIndexOnSpatialPartitionedRDD)
-      throws Exception {
-    if (!buildIndexOnSpatialPartitionedRDD) {
-      // This index is built on top of hash partitioned RDD
-      this.indexedRawRDD = this.rawRdd.mapPartitions(new IndexBuilder(indexType));
-    } else {
+  @SneakyThrows
+  public void buildIndex(final IndexType indexType) {
 
-      // This index is built on top of spatially partitioned RDD
-      if (this.spatialPartitionedRDD == null)
-        throw new Exception("spatialPartitionedRDD is null. run spatialPartitioning");
+    // This index is built on top of spatially partitioned RDD
+    if (this.spatialPartitionedRDD == null)
+      throw new Exception("spatialPartitionedRDD is null. run spatialPartitioning");
 
-      this.indexedSpatialPartitionedRDD =
-          this.spatialPartitionedRDD.mapPartitions(new IndexBuilder(indexType));
-    }
+    this.indexedSpatialPartitionedRDD =
+        this.spatialPartitionedRDD.mapPartitions(new IndexBuilder(indexType));
   }
 
   public JavaRDD<T> getRawRdd() {
     return rawRdd;
+  }
+
+  public JavaRDD<SpatialIndex> getIndexedSpatialRdd() {
+    return indexedSpatialPartitionedRDD;
   }
 }

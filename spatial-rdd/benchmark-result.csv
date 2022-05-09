@@ -1,0 +1,13 @@
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: queryListSize"
+"perf.RddBenchmarks.query_on_hash_hash","avgt",1,5,115.553759,8.951236,"ms/op",1
+"perf.RddBenchmarks.query_on_hash_hash","avgt",1,5,1172.690667,116.681847,"ms/op",10
+"perf.RddBenchmarks.query_on_hash_hash","avgt",1,5,8345.372758,15487.994421,"ms/op",100
+"perf.RddBenchmarks.query_on_hash_hash","avgt",1,5,21704.849608,6425.413447,"ms/op",1000
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,32.209289,11.339253,"ms/op",1
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,227.750827,21.290927,"ms/op",10
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,2398.845967,1679.087017,"ms/op",100
+"perf.RddBenchmarks.query_on_kdTree_kdTree","avgt",1,5,15656.589967,458.380903,"ms/op",1000
+"perf.RddBenchmarks.query_on_kdbTree_rTree","avgt",1,5,41.071656,5.227627,"ms/op",1
+"perf.RddBenchmarks.query_on_kdbTree_rTree","avgt",1,5,407.861672,81.340845,"ms/op",10
+"perf.RddBenchmarks.query_on_kdbTree_rTree","avgt",1,5,4045.017400,745.700718,"ms/op",100
+"perf.RddBenchmarks.query_on_kdbTree_rTree","avgt",1,5,19845.612525,5202.184133,"ms/op",1000
